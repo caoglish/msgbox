@@ -3,13 +3,20 @@
 var msgbox={};
 var _slice=[].slice;
 vex.defaultOptions.className = 'vex-theme-os';
-var _processOptions= function(opts){
-		if(typeof opts ==='string'){
-			return {msg:opts};
-		}else{
-			return opts;
+var _processOptions = function() {
+		var opts = _slice.apply(arguments, [0, 3]);
+
+		if (typeof opts[0] === 'string') {
+			var argu = {
+				msg: opts[0]
+			};
+			if (typeof opts[1] === 'function') argu.ok = opts[1];
+			if (typeof opts[2] === 'function') argu.cancel = opts[2];
+		} else {
+			argu = opts[0];
 		}
-}
+		return argu;
+	}
 
 var dialog = vex.dialog
 var notify = Messenger;
@@ -32,8 +39,8 @@ var _makeHandler=function(context,func){
 	return handler;
 };
 
-msgbox.alert=function(opts){
-	opts=_processOptions(opts);
+msgbox.alert=function(){
+	var opts = _processOptions.apply(null, arguments);
 	var okHandler=_makeHandler(this,opts.ok);
 	dialog.alert({
 		message:opts.msg,
@@ -42,7 +49,7 @@ msgbox.alert=function(opts){
 };
 
 msgbox.confirm=function(opts){
-	opts=_processOptions(opts);
+	var opts = _processOptions.apply(null, arguments);
 	var okHandler=_makeHandler(this,opts.ok),
 		cancelHandler=_makeHandler(this,opts.cancel),
 		callbackHandler=function(value){
@@ -55,7 +62,7 @@ msgbox.confirm=function(opts){
 };
 
 msgbox.prompt=function(opts){
-	opts=_processOptions(opts);
+	var opts = _processOptions.apply(null, arguments);
 	var that=this;
 	var okHandler=_makeHandler(this,opts.ok),
 		cancelHandler=_makeHandler(this,opts.cancel),
