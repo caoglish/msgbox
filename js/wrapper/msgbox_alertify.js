@@ -5,18 +5,17 @@
 
 	var _processOptions = function() {
 		var opts = _slice.apply(arguments, [0, 3]);
-
 		if (typeof opts[0] === 'string') {
 			var argu = {
 				msg: opts[0]
 			};
 			if (typeof opts[1] === 'function') argu.ok = opts[1];
 			if (typeof opts[2] === 'function') argu.cancel = opts[2];
+			return argu;
 		} else {
-			argu = opts[0];
+			return opts[0];
 		}
-		return argu;
-	}
+	};
 
 	var dialog = Alertify.dialog;
 	var notify = Alertify.log;
