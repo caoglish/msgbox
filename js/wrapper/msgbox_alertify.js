@@ -78,4 +78,4 @@
 	};
 
 	window.msgbox = msgbox;
-})(window, document, window.rmit || {});
+})(window, document);
